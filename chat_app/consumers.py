@@ -1,6 +1,6 @@
 from channels.generic.websocket import AsyncWebsocketConsumer
-from asgiref.sync import async_to_sync
 import json
+
 
 class MessagesListConsumer(AsyncWebsocketConsumer):
     async def connect(self):
@@ -21,13 +21,11 @@ class MessagesListConsumer(AsyncWebsocketConsumer):
             "chat_page",{
                 "type" : "chat.message",
                 "message" : text_data_json["message"],
-                "sender" : self.channel_name,
+                "sender" : self.scope['user'].username,
         })
-        #print('TEXT DATA', text_data_json)
     
     async def chat_message(self, event):
         await self.send(text_data=json.dumps({
             "message" : event["message"],
             "sender" : event["sender"],
         }))
-        #print('EVENT', event)

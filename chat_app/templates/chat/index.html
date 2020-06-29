@@ -1,16 +1,18 @@
-<!-- chat/templates/chat/room.html -->
-{% load static %}
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8"/>
-    <title>Chat Room</title>
-</head>
-<body>
-    <textarea id="chat-log" cols="100" rows="20"></textarea><br>
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if not messages %}
+    <h3>No messages</h3>
+{% endif %}
+{% if user.is_authenticated %}
+    <h4><a href="{% url 'logout' %}">logout</a></h4>
+    <textarea id="chat-log" cols="100" rows="20" readonly></textarea><br>
     <input id="chat-message-input" type="text" size="100"><br>
     <input id="chat-message-submit" type="button" value="Send">
-    
-    <script src="{% static 'js/sock.js' %}"></script>
-</body>
-</html>
+{% else %}
+    <h5>Please <a href="{% url 'signin' %}">Sign in</a> or <a href="{% url 'signup' %}">Sign up</a></h5>
+{% endif %}
+
+
+{% endblock %}

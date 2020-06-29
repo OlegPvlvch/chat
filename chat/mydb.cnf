@@ -1,0 +1,5 @@
+[client]
+database = chat
+user = django
+password = DJ_pass_21
+default-character-set = utf8
